@@ -1,29 +1,58 @@
 # IT 140 Module Four Assignment
-# Higher/Lower Game Pseudocode Template
-#
-# Complete the TODO prompts below with your own pseudocode.
-# Keep this file in .pseudo format for submission.
-#
-# Use clear indentation to show decisions and repeated behavior.
-# Your finished pseudocode should address every requirement in the
-# current Module Four Assignment Guidelines and Rubric.
+# Higher/Lower Game PseudoCode 
+# Welcome the player and explain the game.    DISPLAY "Welcome to the higher/lower game, Bella!"
 
-START hilow_game
+# --- Establish a valid guessing range ---    
+# Prompt for the lower and upper bounds, and keep re-prompting    
+# until the lower bound is strictly less than the upper bound.    
+DO        
+    PROMPT "Enter the lower bound: " and GET lowerBound         
+    PROMPT "Enter the upper bound: " and GET upperBound
 
-    # Establish a valid guessing range.
-    TODO: Obtain the lower and upper bounds.
-    TODO: Repeat as needed until the bounds satisfy the requirement.
+    IF lowerBound >= upperBound THEN            
+        DISPLAY "The lower bound must be less than the upper bound."      
+    END IF    
+WHILE lowerBound >= upperBound
 
-    # Establish the number the player is trying to guess.
-    TODO: Generate the required random number from the valid range.
+# --- Pick the number the player is trying to guess ---    
+SET randomNumber = GENERATE_RANDOM_INTEGER(lowerBound, upperBound)
+  
+# --- Play the game ---    
+# Keep asking for guesses until the player finds the number.    
+# It is the FIRST guess, so prompt with the full "Great, now..." line.    
+PROMPT "Great, now guess a number between " + lowerBound + " and " + upperBound + ": "    
+GET guess
 
-    # Play the game.
-    TODO: Obtain and validate a guess using the selected bounds.
-    TODO: Repeat the required game behavior until the correct guess.
-        TODO: Compare a valid guess and provide the required feedback.
-        TODO: Obtain and validate another guess when play continues.
+# Input validation: the guess must be a whole number inside the range.    WHILE guess < lowerBound OR guess > upperBound        
+    DISPLAY "Your guess must be between " + lowerBound + " and " + upperBound + "."        
+    PROMPT "Guess another number: "        
+    GET guess    
+END WHILE
 
-END hilow_game
+# Compare the guess and give feedback; loop until the guess is correct.    
+WHILE guess != randomNumber        
+    IF guess < randomNumber THEN            
+        DISPLAY "Nope, too low."        
+    ELSE            
+        DISPLAY "Nope, too high."        
+    END IF
+
+    # Ask again and validate the new guess before comparing it.          
+    PROMPT "Guess another number: "        
+    GET guess
+       
+    WHILE guess < lowerBound OR guess > upperBound            
+        DISPLAY "Your guess must be between " + lowerBound + " and " + upperBound + "."            
+        PROMPT "Guess another number: "            
+        GET guess        
+    END WHILE    
+END WHILE
+
+# The only way out of the loop is a correct guess.    
+DISPLAY "You got it!"
+
 
 # === References ===
-# TODO: Add references for sources you used, or delete this line if unused.
+Southern New Hampshire University. (n.d.). IT 140: Higher/lower game sample output [Course handout]. Brightspace.
+
+Southern New Hampshire University. (n.d.). IT 140 Module Four assignment guidelines and rubric [Course materials]. Brightspace.
